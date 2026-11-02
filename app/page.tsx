@@ -181,7 +181,7 @@ export default function Home() {
         {mode && <div className="cancel-area">{confirmCancel ? <div role="group" aria-label="Confirmar cancelamento"><p>Cancelar toda a reserva e liberar os pacotes?</p><div><button type="button" className="secondary-button" onClick={() => setConfirmCancel(false)} disabled={blocked}>Manter minha reserva</button><button type="button" className="danger-button" onClick={cancel} disabled={blocked}>Sim, cancelar reserva</button></div></div> : <button type="button" className="text-button" onClick={() => setConfirmCancel(true)} disabled={blocked}>Quero cancelar minha reserva</button>}</div>}
         {!mode && <div className="recovery"><button type="button" className="text-button" aria-expanded={recover} onClick={() => setRecover(!recover)} disabled={blocked}>Já reservou? Acesse sua reserva</button>{recover && <form onSubmit={recoverReservation}><label htmlFor="recovery">Cole seu link privado ou código de reserva</label><input id="recovery" type="text" value={recovery} onChange={e => setRecovery(e.target.value)} required disabled={blocked} /><button type="submit" className="secondary-button" disabled={blocked || !recovery.trim()}>Acessar minha reserva</button></form>}</div>}
       </section>
-      <footer><Heart /><p>Esperamos você para celebrar esse amor.</p><span>Com carinho, a família da Laura</span></footer>
+      <footer><Heart /><p>Esperamos você para celebrar esse amor.</p><span>Com carinho, Diego e Raynara.</span></footer>
     </main>
   </>;
 }
