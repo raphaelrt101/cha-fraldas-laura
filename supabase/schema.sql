@@ -2,7 +2,7 @@ create extension if not exists pgcrypto;
 create table if not exists public.diaper_stock (size text primary key check(size in ('RN','P','M','G','XG')),sort_order int not null unique,total int not null check(total>=0));
 create table if not exists public.reservations(id uuid primary key default gen_random_uuid(),name text not null check(char_length(name) between 2 and 80),token_hash text not null unique,created_at timestamptz not null default now(),cancelled_at timestamptz);
 create table if not exists public.reservation_items(reservation_id uuid not null references public.reservations(id),size text not null references public.diaper_stock(size),quantity int not null check(quantity between 1 and 100),primary key(reservation_id,size));
-insert into public.diaper_stock(size,sort_order,total) values ('RN',1,5),('P',2,10),('M',3,20),('G',4,15),('XG',5,10) on conflict(size) do nothing;
+insert into public.diaper_stock(size,sort_order,total) values ('RN',1,2),('P',2,5),('M',3,7),('G',4,6),('XG',5,0) on conflict(size) do nothing;
 create or replace view public.stock_public with (security_invoker=false) as select s.size,s.sort_order,s.total,coalesce(sum(i.quantity) filter(where r.cancelled_at is null),0)::int as reserved,(s.total-coalesce(sum(i.quantity) filter(where r.cancelled_at is null),0))::int as available from public.diaper_stock s left join public.reservation_items i on i.size=s.size left join public.reservations r on r.id=i.reservation_id group by s.size,s.sort_order,s.total;
 create or replace function public.validate_reservation_items(p_items jsonb) returns void
 language plpgsql set search_path='' as $$

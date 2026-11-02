@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node tests/reservations.mjs"
+    "test": "node tests/reservations.mjs",
+    "test:api": "node tests/api.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0",
